@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'store/contacts/contacts-reducer';
+import { contactsOperations } from 'store/contacts';
 import PropTypes from 'prop-types';
 import { SearchButton } from './ContactItem.styled';
 
@@ -8,7 +8,10 @@ export const ContactItem = ({ id, name, number }) => {
   return (
     <>
       {name}: {number}
-      <SearchButton type="button" onClick={() => dispatch(deleteContact(id))}>
+      <SearchButton
+        type="button"
+        onClick={() => dispatch(contactsOperations.deleteContact(id))}
+      >
         Delete contact
       </SearchButton>
     </>

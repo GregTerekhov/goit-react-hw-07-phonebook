@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'store/contacts/contacts-reducer';
+import { contactsOperations } from 'store/contacts';
 import { selectContacts } from 'store/contacts/selectors';
 import { nanoid } from 'nanoid';
 import { Formik, useFormik } from 'formik';
@@ -30,7 +30,7 @@ export const ContactForm = () => {
         alert(`${values.name} is already in contacts.`);
         return;
       }
-      dispatch(addContact({ id: nanoid(), ...values }));
+      dispatch(contactsOperations.addContact({ id: nanoid(), ...values }));
       resetForm();
     },
     validationSchema: validationSchema,
