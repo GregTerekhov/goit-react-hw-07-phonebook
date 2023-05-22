@@ -1,19 +1,16 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from 'store/contacts/operations';
-import { selectContacts } from 'store/contacts/selectors';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
 import { Container, Title, SubTitle, MessageEmptyList } from './App.styled';
+import { useContacts } from 'hooks/useContacts';
 
 export const App = () => {
-  const contacts = useSelector(selectContacts);
-  const dispatch = useDispatch();
+  const { contacts, fetchContacts } = useContacts();
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    fetchContacts();
+  }, [fetchContacts]);
 
   return (
     <Container>

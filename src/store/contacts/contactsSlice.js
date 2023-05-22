@@ -7,35 +7,18 @@ export const contactsSlice = createSlice({
     items: [],
     isLoading: false,
     error: null,
-    filteredItems: [],
   },
   reducers: {},
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.items = action.payload;
-        state.filteredItems = action.payload;
       })
-      .addCase(
-        addContact.fulfilled,
-        // (state, action) => {
-        //   return {
-        //     ...state,
-        //     items: [...state.items, action.payload],
-        //   };
-        // }
-        (state, action) => {
-          state.items.push(action.payload);
-          state.filteredItems = state.items.filter(item =>
-            item.name.toLowerCase().includes(state.filter.toLowerCase())
-          );
-        }
-      )
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.items.unshift(action.payload);
+      })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.items = state.items.filter(item => item.id !== action.payload.id);
-        state.filteredItems = state.items.filter(item =>
-          item.name.toLowerCase().includes(state.filter.toLowerCase())
-        );
       })
       .addMatcher(isAnyOf(...getActions('pending')), handlePending)
       .addMatcher(isAnyOf(...getActions('rejected')), handleRejected)

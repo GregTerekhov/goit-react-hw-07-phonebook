@@ -1,7 +1,3 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'store/contacts/operations';
-import { selectContacts } from 'store/contacts/selectors';
-import { nanoid } from 'nanoid';
 import { Formik } from 'formik';
 import { validationSchema } from './validationSchema';
 import {
@@ -12,10 +8,10 @@ import {
   ErrorMessageForUser,
   FormButton,
 } from './ContactForm.styled';
+import { useContacts } from 'hooks/useContacts';
 
 export const ContactForm = () => {
-  const contacts = useSelector(selectContacts);
-  const dispatch = useDispatch();
+  const { contacts, addContact } = useContacts();
 
   const handleSubmit = (values, { resetForm }) => {
     const isExist = contacts.some(
@@ -26,7 +22,7 @@ export const ContactForm = () => {
       alert(`${values.name} is already in contacts.`);
       return;
     }
-    dispatch(addContact({ id: nanoid(), ...values }));
+    addContact({ ...values });
     resetForm();
   };
 
@@ -35,7 +31,7 @@ export const ContactForm = () => {
       <Formik
         initialValues={{
           name: '',
-          phone: '',
+          number: '',
         }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
@@ -53,13 +49,13 @@ export const ContactForm = () => {
               />
               <ErrorMessageForUser name="name" component="div" />
             </FormLabel>
-            <FormLabel htmlFor="phone">
+            <FormLabel htmlFor="number">
               Number
               <FormInput
                 type="tel"
-                name="phone"
+                name="number"
                 placeholder="Please enter a phone number..."
-                value={formik.values.phone}
+                value={formik.values.number}
                 onChange={formik.handleChange}
               />
               <ErrorMessageForUser name="number" component="div" />

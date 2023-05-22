@@ -8,7 +8,6 @@ export const fetchContacts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get('/contacts');
-      if (!response.ok) throw new Error('Page not found');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
