@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { contactsOperations } from 'store/contacts';
+import { fetchContacts } from 'store/contacts/operations';
 import { selectContacts } from 'store/contacts/selectors';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { ContactList } from '../ContactList/ContactList';
@@ -11,7 +11,7 @@ export const App = () => {
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
-  useEffect(() => dispatch(contactsOperations.fetchContacts()), [dispatch]);
+  useEffect(() => dispatch(fetchContacts()), [dispatch]);
 
   return (
     <Container>

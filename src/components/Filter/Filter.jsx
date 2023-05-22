@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from 'store/filter/selectors';
-import { contactsOperations } from 'store/contacts';
+import { setFilter } from 'store/filter/filter-reducer';
 import { FilterBox, FilterLabel, FilterInput } from './Filter.styled';
 
 export const Filter = () => {
@@ -16,9 +16,7 @@ export const Filter = () => {
           type="text"
           placeholder="Please enter name..."
           value={filter}
-          onChange={event =>
-            dispatch(contactsOperations.setFilter(event.currentTarget.value))
-          }
+          onChange={event => dispatch(setFilter(event.currentTarget.value))}
         />
       </FilterLabel>
     </FilterBox>
